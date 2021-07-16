@@ -1,15 +1,31 @@
-import numpy as np
+import csv
 import matplotlib.pyplot as plt
-import pandas as pd
 
 from sklearn.datasets import make_blobs
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.covariance import OAS
 
-pd.read_csv("respuesta.csv")
-pd.read_csv("features.csv")
 
-proyecto = pd.read_csv("respuesta.csv")
+from random import randrange, choice
+
+f = open('features.csv')
+csv_f = csv.reader(f)
+dato = []
+columna = 0
+fila = 0
+fila = randrange(698)
+columna = randrange(8)
+
+print(columna)
+print(fila)
+
+for row in csv_f:
+    dato.append(int(row[columna]))
+
+
+print(dato[fila])
+
+data = dato[fila]
 
 
 n_train = 20  # samples for training
@@ -22,14 +38,14 @@ step = 4  # step size for the calculation
 
 
 def generate_data(n_samples, n_features):
-    """Generate random blob-ish data with noisy features.
+    Generate random blob-ish data with noisy features.
 
     This returns an array of input data with shape `(n_samples, n_features)`
     and an array of `n_samples` target labels.
 
     Only one feature contains discriminative information, the other features
     contain only noise.
-    """
+    
     X, y = make_blobs(n_samples=n_samples, n_features=1, centers=[[-2], [2]])
 
     # add non-discriminative features
