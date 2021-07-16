@@ -1,11 +1,9 @@
 import csv
+import numpy as np
 import matplotlib.pyplot as plt
-
 from sklearn.datasets import make_blobs
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.covariance import OAS
-
-
 from random import randrange, choice
 
 f = open('features.csv')
@@ -25,7 +23,23 @@ for row in csv_f:
 
 print(dato[fila])
 
-data = dato[fila]
+n_features = dato[fila]
+
+f = open('respuesta.csv')
+csv_f2 = csv.reader(f)
+dato2 = []
+fila2 = 0
+fila2 = randrange(698)
+
+print(fila)
+
+for row in csv_f2:
+    dato2.append(int(row[0]))
+
+print(dato2[fila2])
+
+n_samples = dato2[fila2]
+
 
 
 n_train = 20  # samples for training
@@ -38,15 +52,15 @@ step = 4  # step size for the calculation
 
 
 def generate_data(n_samples, n_features):
-    Generate random blob-ish data with noisy features.
+    '''Generate random blob-ish data with noisy features.
 
     This returns an array of input data with shape `(n_samples, n_features)`
     and an array of `n_samples` target labels.
 
     Only one feature contains discriminative information, the other features
-    contain only noise.
+    contain only noise.'''
     
-    X, y = make_blobs(n_samples=n_samples, n_features=1, centers=[[-2], [2]])
+    X, y = make_blobs(n_samples=n_samples, n_features=n_features, centers=[[-2], [2]])
 
     # add non-discriminative features
     if n_features > 1:
@@ -87,11 +101,11 @@ plt.plot(features_samples_ratio, acc_clf2, linewidth=2,
 plt.plot(features_samples_ratio, acc_clf3, linewidth=2,
          label="Linear Discriminant Analysis with OAS", color='red')
 
-plt.xlabel('n_features / n_samples')
+plt.xlabel('features.csv / respuesta.csv')
 plt.ylabel('Classification accuracy')
 
 plt.legend(loc=3, prop={'size': 12})
 plt.suptitle('Linear Discriminant Analysis vs. ' + '\n'
              + 'Shrinkage Linear Discriminant Analysis vs. ' + '\n'
-             + 'OAS Linear Discriminant Analysis (1 discriminative feature)')
+             + 'OAS Linear Discriminant Analysis (1 discriminative feature)' + '\n')
 plt.show()
